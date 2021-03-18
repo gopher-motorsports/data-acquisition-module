@@ -6,6 +6,7 @@ sensors:
 				unit: psi
 				quantization: continuous
 				offset: 0
+				data_size: 12
 		sensor_type:
 			analog:
 				output_measured: pressure
@@ -24,22 +25,27 @@ sensors:
 				unit: deg/s
 				quantization: .005
 				offset: 0x8000
+				data_size: 16
 			roll_rate:
 				unit: deg/s
 				quantization: .005
 				offset: 0x8000
+				data_size: 16
 			y_acceleration:
 				unit: g
 				quantization: 0.0001274
 				offset: 0x8000
+				data_size: 16
 			x_acceleration:
 				unit: g
 				quantization: 0.0001274
 				offset: 0x8000
+				data_size: 16
 			z_acceleration:
 				unit: g
 				quantization: 0.0001274
 				offset: 0x8000
+				data_size: 16
 		sensor_type:
 			CAN:
 				byte_order: LSB
@@ -76,6 +82,7 @@ sensors:
 				unit: mm
 				quantization: continuous
 				offset: 0
+				data_size: 12
 		sensor_type:
 			analog:
 				output_measured: height
@@ -105,66 +112,82 @@ sensors:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_2_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_3_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_4_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_5_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_6_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_7_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_8_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_9_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_10_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_11_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_12_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_13_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_14_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_15_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			channel_16_temp:
 				unit: deg
 				quantization: 0.1
 				offset: -100
+				data_size: 16
 			sensor_type:
 				CAN:
 					byte_order: MSB

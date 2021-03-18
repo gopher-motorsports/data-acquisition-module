@@ -36,5 +36,10 @@
 			<type>2</type>
 			<location>C:/Users/ian/SAECode/c-libraries/C-Utils</location>
 		</link>
+		<link>
+			<name>gophercan-lib</name>
+			<type>2</type>
+			<location>C:/Users/ian/SAECode/STM32_CAN/gophercan-lib</location>
+		</link>
 	</linkedResources>
 </projectDescription>
