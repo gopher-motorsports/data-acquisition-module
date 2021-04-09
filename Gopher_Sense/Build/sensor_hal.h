@@ -5,8 +5,8 @@
  *      Author: ian
  */
 
-#ifndef INC_DAM_CONFIG_H_
-#define INC_DAM_CONFIG_H_
+#ifndef INC_SENSOR_HAL_H_
+#define INC_SENSOR_HAL_H_
 #include "../../gophercan-lib/GopherCAN_structs.h"
 
 
@@ -51,10 +51,20 @@ typedef struct
 } BUCKET;
 
 
+typedef struct
+{
+    UNIT    independent_unit;
+    UNIT    dependent_unit;
+    float*  independent_vars;
+    float*  dependent_vars;
+    U16     num_entries;
+}TABLE;
+
 typedef enum
 {
     RATIOMETRIC_LINEAR = 0,
-    ABSOLUTE_LINEAR = 1
+    ABSOLUTE_LINEAR = 1,
+    TABULAR = 2
 } OUTPUT_MODEL_TYPE;
 
 typedef enum
@@ -66,7 +76,8 @@ typedef enum
     DEGREES_F = 4,
     DEGREES_PER_SEC = 5,
     G = 6,
-    MILLIMETERS = 7
+    MILLIMETERS = 7,
+    OHMS = 8
 } UNIT;
 
 typedef enum
@@ -80,20 +91,23 @@ typedef enum
 typedef struct
 {
     OUTPUT_MODEL_TYPE   type;
-    UNIT                unit;
+    UNIT                measurement_unit;
     float               measurement_dependent_quantity;
     float               low_bar;
     float               high_bar;
     float               low_bar_value;
     float               high_bar_value;
+    float               supply_voltage;
+    float               inline_resistance;
+    TABLE*              table;
 } OUTPUT_MODEL;
 
 // what is this data?
 typedef struct
 {
-    char        output_name[50];
-    DATA_SCALAR scalar;
-    U8          data_size_bits;
+    char         output_name[50];
+    DATA_SCALAR  scalar;
+    U8           data_size_bits;
 } OUTPUT;
 
 
@@ -145,6 +159,7 @@ typedef struct
 // describes a CAN sensor
 typedef struct
 {
+    char                sensor_id[50];
     BYTE_ORDER          byte_order;
     SENSOR_CAN_MESSAGE* messages;
     U8                  num_messages;
@@ -155,8 +170,6 @@ typedef struct
 typedef struct
 {
     GENERAL_PARAMETER can_param; // raw data
-    U8*               message_dependency_numbers; // indecies into the messages field of CAN_SENSOR
-    U8                num_message_dependecies;    // num of indicies in the dependency list
     CAN_SENSOR        can_sensor;
     FILTERED_PARAM*   filter_subparams;
     U8                num_filtered_params;
@@ -166,4 +179,4 @@ typedef struct
 
 
 
-#endif /* INC_DAM_CONFIG_H_ */
+#endif /* INC_SENSOR_HAL_H_ */
