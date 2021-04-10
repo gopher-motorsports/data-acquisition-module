@@ -15,7 +15,8 @@ from jinja2 import Template
 TEMPLATES_DIRECTORY = "Templates"
 OUTPUT_DIRECTORY = "Build"
 SENSOR_CONFIG_FILE = "sensors.yaml"
-
+PATH_SEP = "\\"
+# C:\\Users\\ian\\STM32CubeIDE\\workspace_1.3.0\\data-acquisition-module\\Core\\Resources\\dam_hw_config.yaml
 
 def C_ize_Name(name):
     return name.replace(' ', '_').lower()
@@ -27,19 +28,12 @@ def NoneOnValueError(d, k):
         return None
 
 
-class DAM():
-    def __init__(self, hwconfig):
-        self.hwconfig = hwconfig
-        self.pins = []
-        for pin in self.hwconfig['data_input_methods']['pins']:
-            self.pins.append(pin)
-        
-        self.can_sensors = []
-        for sensor in self.hwconfig['data_input_methods']['can_sensors']:
-            self.can_sensors.append(sensor)
+class Module():
+    def __init__(self, ):
+        pass
 
 
-
+# convienient container for data
 class AnalogSensor():
     def __init__(self, sensorID, name, outputs, analog):
         self.sensorID = sensorID
@@ -50,11 +44,12 @@ class AnalogSensor():
         self.tableEntries = ([],[]) #entries in order (independent, dependent)
         self.numTableEntries = None
         if self.table != None:
-            self.numTableEntries = int(len(self.table['entries'])/2)
+            self.numTableEntries = int(len(self.table['entries'])/2) #always even
             for i in range(self.numTableEntries):
                 self.tableEntries[0].append(self.table['entries']["independent{}".format(i+1)])
                 self.tableEntries[1].append(self.table['entries']["dependent{}".format(i+1)])
               
+# convienient container for data
 class CANSensor():
     def __init__(self, sensorID, name, outputs, byte_order, messages):
         self.sensorID = sensorID
@@ -64,37 +59,38 @@ class CANSensor():
         self.messages = messages
         self.numMessages = len(messages)
         self.runCoherenceCheck()
-    def getOutputQuantization(self, output):
-        if output in self.outputs:
-            return self.outputs[output]['quantization']
-        else:
-            return None
-    def getOutputOffset(self, output):
-        if output in self.outputs:
-            return self.outputs[output]['offset']
-        else:
-            return None
+#     def getOutputQuantization(self, output):
+#         if output in self.outputs:
+#             return self.outputs[output]['quantization']
+#         else:
+#             return None
+#     def getOutputOffset(self, output):
+#         if output in self.outputs:
+#             return self.outputs[output]['offset']
+#         else:
+#             return None
     def runCoherenceCheck(self):
         # TODO check for messages that output an output not listed or if outputs arent produced by messages
         pass
     
 def main():
-#     argv = sys.argv
-#     if len(argv < 3):
-#         print("Need 2 args: SensorDefFilePath.yaml HWConfigFilePath.yaml")
-#         sys.exit()
-     
-    argv = ['','C:\\Users\\ian\\STM32CubeIDE\\workspace_1.3.0\\data-acquisition-module\\Gopher_Sense\\sensors.yaml',\
-            'C:\\Users\\ian\\STM32CubeIDE\\workspace_1.3.0\\data-acquisition-module\\Setup\\hw_config.yaml']
-    sensorFile = open(SENSOR_CONFIG_FILE)
-    #configFile = open(argv[2])
+    argv = sys.argv
+    if len(argv) < 2:
+        print("Pass the path to the hardware config file: somepath\\some_module_hwconfig.yaml")
+        sys.exit()
     
+    sensorFile = open(SENSOR_CONFIG_FILE)
+    configFile = open(argv[1])
+    configFileName = argv[1].split(PATH_SEP)[-1].replace(".yaml", "")
+    print(configFileName)
     sensor_raw = yaml.full_load(sensorFile)
-#     hwconfig_raw = yaml.full_load(configFile)
-#     hwconfig_munch = munch.Munch(hwconfig_raw)
+    hwconfig_raw = yaml.full_load(configFile)
+    hwconfig_munch = munch.Munch(hwconfig_raw)
     sensors_munch = munch.Munch(sensor_raw)
     sensors = sensors_munch.sensors
     
+    
+    # define sensor objects
     analog_sensors = []
     can_sensors = []
     for s in sensors:
@@ -110,9 +106,8 @@ def main():
     
     # write the sensor templates
     os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
-    # Generate common header file
-    h_filename = 'gopher_sense_TEMPLATES.h.jinja2'
-    c_filename = 'gopher_sense_TEMPLATES.c.jinja2'
+    h_filename = 'gopher_sense_TEMPLATE.h.jinja2'
+    c_filename = 'gopher_sense_TEMPLATE.c.jinja2'
     with open(os.path.join(TEMPLATES_DIRECTORY, h_filename)) as file_:
         template = Template(file_.read())
         output = template.render(analog_sensors=analog_sensors, can_sensors=can_sensors)
@@ -127,6 +122,7 @@ def main():
         with open(os.path.join(OUTPUT_DIRECTORY, filename), "w") as fh:
             fh.write(output)
 
+    module = Module()
     
 
 if __name__ == '__main__':

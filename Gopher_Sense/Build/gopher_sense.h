@@ -2,7 +2,7 @@
 #ifndef GO4_SENSE_H
 #define GO4_SENSE_H
 
-#include "./sensor_hal.h"
+#include "../sensor_hal.h"
 
 #define NUM_ANALOG_SENSORS 3
 #define NUM_CAN_SENSORS 2

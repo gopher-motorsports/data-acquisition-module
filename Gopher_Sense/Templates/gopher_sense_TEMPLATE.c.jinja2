@@ -33,8 +33,8 @@ float {{sensor.name}}_output_model_table_dependent_vars[{{sensor.numTableEntries
     {{entry}}{% if loop.index < l %},{% endif %}
   {% endfor %}
 };
-{{sensor.name}}_output_model_table.independent_vars = {{sensor.name}}_output_model_table_independent_vars}};
-{{sensor.name}}_output_model_table.dependent_vars = {{sensor.name}}_output_model_table_dependent_vars}};
+{{sensor.name}}_output_model_table.independent_vars = {{sensor.name}}_output_model_table_independent_vars;
+{{sensor.name}}_output_model_table.dependent_vars = {{sensor.name}}_output_model_table_dependent_vars;
 {{sensor.name}}.model.table = &{{sensor.name}}_output_model_table;
 
 {% else %}
@@ -62,7 +62,7 @@ CAN_SENSOR {{sensor.name}};
 {% set output = m['output_measured'] %}
 SENSOR_CAN_MESSAGE {{sensor.name}}_message_{{loop.index}};
 {{sensor.name}}_message_{{loop.index}}.message_id = {{m['id']}};
-{{sensor.name}}_message_{{loop.index}}.output.output_name = {{output}};
+{{sensor.name}}_message_{{loop.index}}.output.output_name = "{{output}}";
 {{sensor.name}}_message_{{loop.index}}.output.scalar.quantization = {{sensor.outputs[output]['quantization']}};
 {{sensor.name}}_message_{{loop.index}}.output.scalar.offset = {{sensor.outputs[output]['offset']}};
 {{sensor.name}}_message_{{loop.index}}.data_start = {{m['data_byte_start']}};

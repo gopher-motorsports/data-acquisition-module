@@ -25,12 +25,12 @@ data_input_methods:
             
 parameters_produced:
     oil_cooler_pressure_in:
-        gophercan_id: xx
-        produced_by: PA0
+        gophercan_id: 1
+        produced_by: ADC1_IN5
         depends_on: pressure
         filter_subparams:
             oil_cooler_pressure_in_lowpass_1000:
-                gophercan_id: xx
+                gophercan_id: 11
                 filter_type: low_pass
                 filter_value: 1000
         buffering:
@@ -38,19 +38,19 @@ parameters_produced:
 
             
     oil_cooler_pressure_out:
-        gophercan_id: xx
-        produced_by: PA1
+        gophercan_id: 2
+        produced_by: ADC1_IN14
         depends_on: pressure
         filter_subparams:
             oil_cooler_pressure_in_lowpass_1000:
                 filter_type: low_pass
                 filter_value: 1000
-                gophercan_id: xx
+                gophercan_id: 12
         buffering:
             num_samples_buffered: 100
             
     lateral_acceleration:
-        gophercan_id: 2
+        gophercan_id: 3
         produced_by: can_sensor_1
         depends_on: x_acceleration
         filter_subparams:
@@ -58,7 +58,7 @@ parameters_produced:
             num_samples_buffered: 100
             
     longitudinal_acceleration:
-        gophercan_id: xx
+        gophercan_id: 4
         produced_by: can_sensor_1
         depends_on: y_acceleration
         filter_subparams:
@@ -66,8 +66,8 @@ parameters_produced:
             num_samples_buffered: 100
     
     rad_water_temp_in:
-        gophercan_id: xx
-        produced_by: PA4
+        gophercan_id: 5
+        produced_by: ADC3_IN14
         depends_on: temperature
         filter_subparams:
         buffering:
@@ -75,7 +75,7 @@ parameters_produced:
             
         
     yaw_rate:
-        gophercan_id: xx
+        gophercan_id: 6
         produced_by: can_sensor_1
         depends_on: yaw_rate
         filter_subparams:
@@ -84,12 +84,12 @@ parameters_produced:
             
         
     back_left_tire_temp_channel_1:
-        gophercan_id: xx
+        gophercan_id: 7
         produced_by: can_sensor_2
         depends_on: channel_1_temp
         filter_subparams:
         buffering:
-                num_samples_buffered: 100
+            num_samples_buffered: 100
 
 buckets:
     bucket_1:

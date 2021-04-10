@@ -1,0 +1,19 @@
+#ifndef {{configFileName}}_H
+#define {{configFileName}}_H
+
+#include "../sensor_hal.h"
+
+#define 
+
+// analog params must be in channel order
+extern ANALOG_SENSOR_PARAM* adc1_sensor_params;
+extern ANALOG_SENSOR_PARAM* adc2_sensors_params;
+extern ANALOG_SENSOR_PARAM* adc3_sensors_params;
+
+extern CAN_SENSOR_PARAM* can_sensor_params;
+
+#define NUM_BUCKETS {{}}
+extern BUCKET* buckets;
+
+
+#endif // {{configFileName}}_H

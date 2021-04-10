@@ -1,5 +1,5 @@
 /*
- * dam_config.h
+ * sensor_hal.h
  *
  *  Created on: Mar 18, 2021
  *      Author: ian
@@ -70,6 +70,12 @@ typedef enum
     OHMS = 8
 } UNIT;
 
+typedef struct {
+    U16* buffer;
+    U16  buffer_size;
+    U16  fill_level;
+} U16_BUFFER;
+
 typedef struct
 {
     UNIT    independent_unit;
@@ -129,6 +135,7 @@ typedef enum {
 typedef struct
 {
     GENERAL_PARAMETER   filtered_param;
+    U32                 param_id;
     FILTER_TYPE         filter_type;
     U16                 filter_value;
 } FILTERED_PARAM;
@@ -138,10 +145,11 @@ typedef struct
 typedef struct
 {
     GENERAL_PARAMETER   analog_param; // raw data
+    U32                 param_id;
     ANALOG_SENSOR       analog_sensor;
     FILTERED_PARAM*     filter_subparams;
     U8                  num_filtered_subparams;
-    U16                 samples_to_buffer;
+    U16_BUFFER          buffer;
 } ANALOG_SENSOR_PARAM;
 
 
@@ -168,10 +176,11 @@ typedef struct
 typedef struct
 {
     GENERAL_PARAMETER can_param; // raw data
+    U32               param_id;
     CAN_SENSOR        can_sensor;
     FILTERED_PARAM*   filter_subparams;
     U8                num_filtered_params;
-    U16               samples_to_buffer;
+    U16_BUFFER        buffer;
 } CAN_SENSOR_PARAM;
 
 
