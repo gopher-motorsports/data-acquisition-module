@@ -2,19 +2,20 @@ module_name: rear_left_dam
 gophercan_module_id: 2
 
 data_input_methods:
-    pins:
-        PA0:
+    adc_channels:
+        ADC1_IN5:
             sensor: "32313757"
             min_frequency: 10
                     
-        PA1:
+        ADC1_IN14:
             sensor: "32313757"
             min_frequency: 20
             
-        PA3:
+        ADC1_IN2:
             sensor: "185624"
             min_frequency: 30
-        PA4:
+            
+        ADC3_IN14:
             sensor: "NTC M12-H"
             min_frequency: 1        
     

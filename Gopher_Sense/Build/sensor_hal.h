@@ -30,7 +30,7 @@ typedef union
 typedef struct
 {
     float   quantization;
-    U32     offset;
+    float   offset;
 } DATA_SCALAR;
 
 
@@ -49,16 +49,6 @@ typedef struct
     U8          frequency;
     PARAM_LIST  bucket;
 } BUCKET;
-
-
-typedef struct
-{
-    UNIT    independent_unit;
-    UNIT    dependent_unit;
-    float*  independent_vars;
-    float*  dependent_vars;
-    U16     num_entries;
-}TABLE;
 
 typedef enum
 {
@@ -80,6 +70,15 @@ typedef enum
     OHMS = 8
 } UNIT;
 
+typedef struct
+{
+    UNIT    independent_unit;
+    UNIT    dependent_unit;
+    float*  independent_vars;
+    float*  dependent_vars;
+    U16     num_entries;
+}TABLE;
+
 typedef enum
 {
     LSB = 0,
@@ -92,7 +91,6 @@ typedef struct
 {
     OUTPUT_MODEL_TYPE   type;
     UNIT                measurement_unit;
-    float               measurement_dependent_quantity;
     float               low_bar;
     float               high_bar;
     float               low_bar_value;
@@ -175,6 +173,7 @@ typedef struct
     U8                num_filtered_params;
     U16               samples_to_buffer;
 } CAN_SENSOR_PARAM;
+
 
 
 
