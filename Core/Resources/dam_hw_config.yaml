@@ -20,8 +20,10 @@ data_input_methods:
             min_frequency: 1        
     
     can_sensors:
-        can_sensor_1: "MM5.10-R"
-        can_sensor_2: "IRTS-V2"
+        can_sensor_1: 
+            sensor: "MM5.10-R"
+        can_sensor_2:
+            sensor: "IRTS-V2"
             
 parameters_produced:
     oil_cooler_pressure_in:
@@ -42,7 +44,7 @@ parameters_produced:
         produced_by: ADC1_IN14
         depends_on: pressure
         filter_subparams:
-            oil_cooler_pressure_in_lowpass_1000:
+            oil_cooler_pressure_out_lowpass_1000:
                 filter_type: low_pass
                 filter_value: 1000
                 gophercan_id: 12
@@ -96,20 +98,21 @@ buckets:
         id: 1
         frequency: 10
         parameters:
-            oil_cooler_pressure_in:
-            oil_cooler_pressure_out:
+            - oil_cooler_pressure_in
+            - oil_cooler_pressure_in:
+            - oil_cooler_pressure_out_lowpass_1000:
     bucket_2:
         id: 2
         frequency: 50
         parameters:
-            lateral_acceleration:
-            longitudinal_acceleration:
+            - lateral_acceleration
+            - longitudinal_acceleration
     
     bucket_3:
         id: 3
         frequency: 1
         parameters:
-            back_left_tire_temp_channel_1:
+            - back_left_tire_temp_channel_1
             
             
             

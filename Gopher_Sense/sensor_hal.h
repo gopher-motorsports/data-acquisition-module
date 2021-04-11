@@ -116,6 +116,7 @@ typedef struct
 
 
 // describes an analog sensor
+// assumed that there is only 1 output
 typedef struct
 {
     char            sensor_id[50];
@@ -147,7 +148,7 @@ typedef struct
     GENERAL_PARAMETER   analog_param; // raw data
     U32                 param_id;
     ANALOG_SENSOR       analog_sensor;
-    FILTERED_PARAM*     filter_subparams;
+    FILTERED_PARAM*     filtered_subparams;
     U8                  num_filtered_subparams;
     U16_BUFFER          buffer;
 } ANALOG_SENSOR_PARAM;
@@ -178,7 +179,8 @@ typedef struct
     GENERAL_PARAMETER can_param; // raw data
     U32               param_id;
     CAN_SENSOR        can_sensor;
-    FILTERED_PARAM*   filter_subparams;
+    U8                message_idx; // which message from the can sensor?
+    FILTERED_PARAM*   filtered_subparams;
     U8                num_filtered_params;
     U16_BUFFER        buffer;
 } CAN_SENSOR_PARAM;
