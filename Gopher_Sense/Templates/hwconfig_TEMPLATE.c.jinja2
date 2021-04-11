@@ -19,9 +19,9 @@ adc1_param{{i}}.num_filtered_subparams = {{l}};
 {% for fparam in param.filtered_params -%}
 FILTERED_PARAM adc1_param{{i}}_filtered_{{loop.index}};
 adc1_param{{i}}_filtered_{{loop.index}}.filtered_param = {{fparam.param_name}};
-adc1_param{{i}}_filtered_{{loop.index}}.param_id = {{fparam.id}}
-adc1_param{{i}}_filtered_{{loop.index}}.filter_type = {{fparam.filter[0]}}
-adc1_param{{i}}_filtered_{{loop.index}}.filter_value = {{fparam.filter[1]}}
+adc1_param{{i}}_filtered_{{loop.index}}.param_id = {{fparam.id}};
+adc1_param{{i}}_filtered_{{loop.index}}.filter_type = {{fparam.filter[0]}};
+adc1_param{{i}}_filtered_{{loop.index}}.filter_value = {{fparam.filter[1]}};
 {% endfor %}
 FILTERED_PARAM adc1_param{{i}}_fparam_list[{{l}}] = {
 {% for n in range(l) %}

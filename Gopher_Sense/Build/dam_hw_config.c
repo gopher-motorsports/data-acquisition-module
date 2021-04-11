@@ -18,15 +18,15 @@ adc1_param1.num_filtered_subparams = 1;
 
 FILTERED_PARAM adc1_param1_filtered_1;
 adc1_param1_filtered_1.filtered_param = oil_cooler_pressure_in_lowpass_1000;
-adc1_param1_filtered_1.param_id = 11
-adc1_param1_filtered_1.filter_type = LOW_PASS
-adc1_param1_filtered_1.filter_value = 1000
+adc1_param1_filtered_1.param_id = 11;
+adc1_param1_filtered_1.filter_type = LOW_PASS;
+adc1_param1_filtered_1.filter_value = 1000;
 
 FILTERED_PARAM adc1_param1_fparam_list[1] = {
 
 adc1_param1_filtered_1
 
-}
+};
 adc1_param1.filtered_subparams = adc1_param1_fparam_list;
 
 
@@ -51,15 +51,15 @@ adc1_param2.num_filtered_subparams = 1;
 
 FILTERED_PARAM adc1_param2_filtered_1;
 adc1_param2_filtered_1.filtered_param = oil_cooler_pressure_out_lowpass_1000;
-adc1_param2_filtered_1.param_id = 12
-adc1_param2_filtered_1.filter_type = LOW_PASS
-adc1_param2_filtered_1.filter_value = 1000
+adc1_param2_filtered_1.param_id = 12;
+adc1_param2_filtered_1.filter_type = LOW_PASS;
+adc1_param2_filtered_1.filter_value = 1000;
 
 FILTERED_PARAM adc1_param2_fparam_list[1] = {
 
 adc1_param2_filtered_1
 
-}
+};
 adc1_param2.filtered_subparams = adc1_param2_fparam_list;
 
 
@@ -251,7 +251,7 @@ bucket_1.frequency = 10;
 PARAM_LIST bucket_1_bucket_param_list;
 bucket_1_bucket_param_list.len = 4;
 
-GENERAL_PARAMETER bucket_1_bucket_general_param_list[bucket.params|length] = {
+GENERAL_PARAMETER bucket_1_bucket_general_param_list[4] = {
 oil_cooler_pressure_in,
 oil_cooler_pressure_out,
 oil_cooler_pressure_out_lowpass_1000,
@@ -272,7 +272,7 @@ bucket_2.frequency = 50;
 PARAM_LIST bucket_2_bucket_param_list;
 bucket_2_bucket_param_list.len = 2;
 
-GENERAL_PARAMETER bucket_2_bucket_general_param_list[bucket.params|length] = {
+GENERAL_PARAMETER bucket_2_bucket_general_param_list[2] = {
 lateral_acceleration,
 longitudinal_acceleration
 
@@ -291,7 +291,7 @@ bucket_3.frequency = 1;
 PARAM_LIST bucket_3_bucket_param_list;
 bucket_3_bucket_param_list.len = 1;
 
-GENERAL_PARAMETER bucket_3_bucket_general_param_list[bucket.params|length] = {
+GENERAL_PARAMETER bucket_3_bucket_general_param_list[1] = {
 back_left_tire_temp_channel_1
 
 };

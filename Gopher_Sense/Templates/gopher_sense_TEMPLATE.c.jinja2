@@ -19,7 +19,7 @@ ANALOG_SENSOR {{sensor.name}};
 
 {% if sensor.table %}
 TABLE {{sensor.name}}_output_model_table;
-{{sensor.name}}_output_model_table.independent_unit = {{sensor.table['independent_unit'].upper()}}
+{{sensor.name}}_output_model_table.independent_unit = {{sensor.table['independent_unit'].upper()}};
 {{sensor.name}}_output_model_table.dependent_unit = {{sensor.table['dependent_unit'].upper()}};
 {% set l = sensor.numTableEntries %}
 {{sensor.name}}_output_model_table.num_entries = {{l}};
@@ -67,7 +67,7 @@ SENSOR_CAN_MESSAGE {{sensor.name}}_message_{{loop.index}};
 {{sensor.name}}_message_{{loop.index}}.output.scalar.quantization = {{sensor.outputs[output]['quantization']}};
 {{sensor.name}}_message_{{loop.index}}.output.scalar.offset = {{sensor.outputs[output]['offset']}};
 {{sensor.name}}_message_{{loop.index}}.data_start = {{m['data_byte_start']}};
-{{sensor.name}}_message_{{loop.index}}.data_end= {{m['data_byte_end']}};
+{{sensor.name}}_message_{{loop.index}}.data_end = {{m['data_byte_end']}};
 {% endfor %}
 
 SENSOR_CAN_MESSAGE {{sensor.name}}_messages[{{l}}] = {
