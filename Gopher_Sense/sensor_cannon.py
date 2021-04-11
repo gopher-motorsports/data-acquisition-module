@@ -15,6 +15,11 @@ from jinja2 import Template
 TEMPLATES_DIRECTORY = "Templates"
 OUTPUT_DIRECTORY = "Build"
 SENSOR_CONFIG_FILE = "sensors.yaml"
+SENSOR_H_FILE = 'gopher_sense_TEMPLATE.h.jinja2'
+SENSOR_C_FILE = 'gopher_sense_TEMPLATE.c.jinja2'
+HWCONFIG_C_FILE = 'hwconfig_TEMPLATE.c.jinja2'
+HWCONFIG_H_FILE = 'hwconfig_TEMPLATE.h.jinja2'
+    
 PATH_SEP = "\\"
 # C:\\Users\\ian\\STM32CubeIDE\\workspace_1.3.0\\data-acquisition-module\\Core\\Resources\\dam_hw_config.yaml
 
@@ -70,7 +75,7 @@ class Module():
             if param['filter_subparams']:
                 for f_p in param['filter_subparams']:
                     fp = param['filter_subparams'][f_p]
-                    filteredP = Param(fp, fp['gophercan_id'] , [], 0, producer, (fp['filter_type'].upper(),fp['filter_value']), None)
+                    filteredP = Param(f_p, fp['gophercan_id'] , [], 0, producer, (fp['filter_type'].upper(),fp['filter_value']), None)
                     filtered_params.append(filteredP)
             p = Param(p, param['gophercan_id'], filtered_params, param['buffering']['num_samples_buffered'], producer, None, param['depends_on'] )
             if ("ADC1" in producer):
@@ -123,7 +128,8 @@ class Module():
         return None
 
 class Bucket():
-    def __init__(self, id, frequency, params):
+    def __init__(self, name, id, frequency, params):
+        self.name = name
         self.id = id
         self.frequency = frequency
         self.params = params
@@ -200,16 +206,15 @@ def main():
     
     # write the sensor templates
     os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
-    sensor_h_filename = 'gopher_sense_TEMPLATE.h.jinja2'
-    sensor_c_filename = 'gopher_sense_TEMPLATE.c.jinja2'
-    with open(os.path.join(TEMPLATES_DIRECTORY, sensor_h_filename)) as file_:
+    print("Generating ", SENSOR_H_FILE)
+    with open(os.path.join(TEMPLATES_DIRECTORY, SENSOR_H_FILE)) as file_:
         template = Template(file_.read())
         output = template.render(analog_sensors=analog_sensors, can_sensors=can_sensors)
         filename = "gopher_sense.h"
         with open(os.path.join(OUTPUT_DIRECTORY, filename), "w") as fh:
             fh.write(output)
-
-    with open(os.path.join(TEMPLATES_DIRECTORY, sensor_c_filename)) as file_:
+    print("Generating ", SENSOR_C_FILE)
+    with open(os.path.join(TEMPLATES_DIRECTORY, SENSOR_C_FILE)) as file_:
         template = Template(file_.read())
         output = template.render(analog_sensors=analog_sensors, can_sensors=can_sensors)
         filename = "gopher_sense.c"
@@ -219,16 +224,20 @@ def main():
     module = Module(hwconfig_munch.module_name, hwconfig_munch.gophercan_module_id, hwconfig_munch['data_input_methods']['adc_channels'], \
                     hwconfig_munch['data_input_methods']['can_sensors'], hwconfig_munch['parameters_produced'], analog_sensors, can_sensors)
     buckets = []
-
-    hwconfig_c_file = 'hwconfig_TEMPLATE.c.jinja2'
-    hwconfig_h_file = 'hwconfig_TEMPLATE.h.jinja2'
-    with open(os.path.join(TEMPLATES_DIRECTORY, hwconfig_c_file)) as file_:
+    for _b in hwconfig_munch.buckets:
+        b = hwconfig_munch.buckets[_b]
+        bucket_params = [bp for bp in b['parameters']]
+        buckets.append(Bucket(_b, b['id'], b['frequency'], bucket_params))
+    
+    print("Generating ", HWCONFIG_C_FILE)
+    with open(os.path.join(TEMPLATES_DIRECTORY, HWCONFIG_C_FILE)) as file_:
         template = Template(file_.read())
         output = template.render(module=module, buckets=buckets, configFileName=configFileName)
         filename = configFileName + ".c"
         with open(os.path.join(OUTPUT_DIRECTORY, filename), "w") as fh:
             fh.write(output)
-    with open(os.path.join(TEMPLATES_DIRECTORY, hwconfig_h_file)) as file_:
+    print("Generating ", HWCONFIG_H_FILE)
+    with open(os.path.join(TEMPLATES_DIRECTORY, HWCONFIG_H_FILE)) as file_:
         template = Template(file_.read())
         output = template.render(module=module, buckets=buckets, configFileName=configFileName)
         filename = configFileName + ".h"

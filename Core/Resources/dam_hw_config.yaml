@@ -99,8 +99,9 @@ buckets:
         frequency: 10
         parameters:
             - oil_cooler_pressure_in
-            - oil_cooler_pressure_in:
-            - oil_cooler_pressure_out_lowpass_1000:
+            - oil_cooler_pressure_out
+            - oil_cooler_pressure_out_lowpass_1000
+            - oil_cooler_pressure_in_lowpass_1000
     bucket_2:
         id: 2
         frequency: 50

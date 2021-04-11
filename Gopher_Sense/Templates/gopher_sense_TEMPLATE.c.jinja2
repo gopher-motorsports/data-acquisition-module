@@ -5,9 +5,9 @@
 
 //ANALOG_SENSORS
 {% for sensor in analog_sensors %}
+// Sensor definition {{sensor.name}}
 ANALOG_SENSOR {{sensor.name}};
 {{sensor.name}}.sensor_id = "{{sensor.sensorID}}";
-
 {{sensor.name}}.model.type = {{sensor.analog['output_model'].upper()}};
 {{sensor.name}}.model.measurement_unit = {{sensor.analog['measurement_unit'].upper()}};
 {{sensor.name}}.model.supply_voltage = {{sensor.analog['supply_voltage']}};
@@ -51,6 +51,7 @@ float {{sensor.name}}_output_model_table_dependent_vars[{{sensor.numTableEntries
 
 // CAN sensors
 {% for sensor in can_sensors %}
+// Sensor definition {{sensor.name}}
 CAN_SENSOR {{sensor.name}};
 {{sensor.name}}.sensor_id = "{{sensor.sensorID}}";
 {{sensor.name}}.byte_order = {{sensor.byte_order}};
@@ -78,6 +79,7 @@ SENSOR_CAN_MESSAGE {{sensor.name}}_messages[{{l}}] = {
 {{sensor.name}}.messages = {{sensor.name}}_messages;
 {% endfor %}
 
+#undef continuous
 
 {#
 ANALOG_SENSOR* analog_sensor_list[NUM_ANALOG_SENSORS] = {

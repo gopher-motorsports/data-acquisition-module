@@ -21,7 +21,7 @@ extern ANALOG_SENSOR_PARAM* adc3_sensors_params;
 #define NUM_CAN_SENSOR_PARAMS 4
 extern CAN_SENSOR_PARAM* can_sensor_params;
 
-#define NUM_BUCKETS 0
+#define NUM_BUCKETS 3
 extern BUCKET* buckets;
 
 
